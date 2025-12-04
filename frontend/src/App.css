@@ -1,541 +1,583 @@
-/* ===== VARIABLES GLOBALES FUTURISTES ===== */
+/* ===== VARIABLES CYBERPUNK SOMBRE ===== */
 :root {
-    --primary: #6366f1;
-    --primary-glow: #818cf8;
-    --secondary: #8b5cf6;
-    --accent: #06b6d4;
-    --accent-glow: #22d3ee;
-    --bg-primary: rgba(255, 255, 255, 0.85);
-    --bg-secondary: rgba(240, 240, 255, 0.6);
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --border: rgba(99, 102, 241, 0.2);
-    --shadow: rgba(0, 0, 0, 0.1);
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --neon-glow: 0 0 15px currentColor;
-  }
+  /* Couleurs néon cyberpunk */
+  --neon-blue: #00f3ff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #9d00ff;
+  --neon-green: #00ff9d;
+  --neon-yellow: #ffdd00;
   
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --primary: #818cf8;
-      --primary-glow: #a5b4fc;
-      --secondary: #a78bfa;
-      --accent: #22d3ee;
-      --accent-glow: #67e8f9;
-      --bg-primary: rgba(15, 23, 42, 0.9);
-      --bg-secondary: rgba(30, 41, 59, 0.7);
-      --text-primary: #f1f5f9;
-      --text-secondary: #cbd5e1;
-      --border: rgba(129, 140, 248, 0.3);
-      --shadow: rgba(0, 0, 0, 0.3);
-      --glass-bg: rgba(15, 23, 42, 0.5);
-      --glass-border: rgba(129, 140, 248, 0.2);
-    }
-  }
+  /* Thème sombre */
+  --bg-dark: #0a0a0f;
+  --bg-darker: #050508;
+  --card-bg: rgba(20, 20, 30, 0.9);
+  --card-border: rgba(0, 243, 255, 0.3);
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0ff;
+  --text-dim: #8888cc;
   
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* Effets */
+  --glow-blue: 0 0 20px var(--neon-blue);
+  --glow-pink: 0 0 20px var(--neon-pink);
+  --glow-purple: 0 0 20px var(--neon-purple);
+  --glow-green: 0 0 20px var(--neon-green);
+  --neon-text: 0 0 10px currentColor;
+}
+
+/* ===== RESET CYBERPUNK ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Courier New', 'Segoe UI', monospace;
+  background: 
+    radial-gradient(circle at 10% 20%, var(--neon-purple) 0%, transparent 25%),
+    radial-gradient(circle at 90% 80%, var(--neon-blue) 0%, transparent 25%),
+    linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+  min-height: 100vh;
+  padding: 20px;
+  overflow-x: hidden;
+  color: var(--text-primary);
+}
+
+/* Effet de scanlines */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 243, 255, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Particules flottantes */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, var(--neon-blue) 1px, transparent 2px),
+    radial-gradient(2px 2px at 40px 70px, var(--neon-pink) 1px, transparent 2px),
+    radial-gradient(2px 2px at 60px 20px, var(--neon-green) 1px, transparent 2px);
+  background-size: 100px 100px;
+  z-index: -1;
+  opacity: 0.3;
+  animation: floatParticles 20s linear infinite;
+}
+
+@keyframes floatParticles {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(-100px) translateX(100px); }
+}
+
+/* ===== CONTAINER FUTURISTE ===== */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: var(--card-bg);
+  backdrop-filter: blur(15px);
+  border: 2px solid var(--card-border);
+  border-radius: 20px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    var(--glow-blue),
+    0 0 50px rgba(0, 243, 255, 0.2),
+    inset 0 0 50px rgba(0, 243, 255, 0.1);
+}
+
+/* Bordure animée */
+.container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--neon-blue),
+    var(--neon-pink),
+    var(--neon-purple),
+    var(--neon-green),
+    var(--neon-blue)
+  );
+  border-radius: 22px;
+  z-index: -1;
+  animation: borderRotate 4s linear infinite;
+  filter: blur(10px);
+  opacity: 0.7;
+}
+
+@keyframes borderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== TITRE CYBERPUNK ===== */
+h1 {
+  text-align: center;
+  font-size: 3.5rem;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  position: relative;
+  text-shadow: var(--neon-text);
+  background: linear-gradient(
+    90deg,
+    var(--neon-blue),
+    var(--neon-pink),
+    var(--neon-green)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+h1::after {
+  content: 'TODO LIST';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  color: transparent;
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.3);
+  z-index: -1;
+}
+
+@keyframes textGlow {
+  0% { filter: drop-shadow(0 0 10px var(--neon-blue)); }
+  100% { filter: drop-shadow(0 0 20px var(--neon-pink)); }
+}
+
+/* ===== FORMULAIRE CYBERPUNK ===== */
+.add-todo {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 20px;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.add-todo::before {
+  content: '⚡';
+  position: absolute;
+  top: -30px;
+  left: 0;
+  font-size: 1.5rem;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.add-todo input {
+  padding: 18px 24px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--neon-blue);
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+.add-todo input:focus {
+  outline: none;
+  border-color: var(--neon-pink);
+  box-shadow: var(--glow-pink);
+  background: rgba(255, 0, 255, 0.1);
+}
+
+.add-todo input::placeholder {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.add-todo button {
+  padding: 18px 36px;
+  background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: var(--glow-purple);
+}
+
+.add-todo button:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    var(--glow-blue),
+    0 10px 30px rgba(157, 0, 255, 0.4);
+}
+
+.add-todo button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  animation: buttonShine 3s linear infinite;
+}
+
+@keyframes buttonShine {
+  0% { transform: rotate(45deg) translateX(-100%); }
+  100% { transform: rotate(45deg) translateX(100%); }
+}
+
+/* ===== LISTE DES TODOS ===== */
+.todo-list {
+  margin-bottom: 50px;
+  min-height: 300px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 30px;
+  margin-bottom: 20px;
+  background: rgba(10, 10, 20, 0.8);
+  border-radius: 16px;
+  border-left: 6px solid var(--neon-blue);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.todo-item:hover {
+  transform: translateX(10px);
+  box-shadow: 
+    var(--glow-blue),
+    0 15px 40px rgba(0, 243, 255, 0.2);
+}
+
+.todo-item.completed {
+  border-left-color: var(--neon-green);
+  opacity: 0.8;
+  background: rgba(0, 255, 157, 0.05);
+}
+
+.todo-item.completed .todo-content h3 {
+  text-decoration: line-through;
+  color: var(--neon-green);
+}
+
+/* Effet de scan sur les todos */
+.todo-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 243, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.todo-item:hover::before {
+  left: 100%;
+}
+
+.todo-content {
+  flex: 1;
+  padding-right: 30px;
+}
+
+.todo-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  text-shadow: var(--neon-text);
+  position: relative;
+  display: inline-block;
+}
+
+.todo-content h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--neon-blue);
+  transition: width 0.3s ease;
+}
+
+.todo-item:hover .todo-content h3::after {
+  width: 100%;
+}
+
+.todo-content p {
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.todo-content small {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.todo-content small::before {
+  content: '⏱️';
+  font-size: 0.8rem;
+}
+
+/* ===== BOUTONS D'ACTION ===== */
+.todo-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.todo-actions button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 130px;
+}
+
+.complete-btn {
+  background: linear-gradient(135deg, var(--neon-green), #00cc7a);
+  color: black;
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+.complete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px var(--neon-green);
+}
+
+.completed-btn {
+  background: linear-gradient(135deg, var(--neon-yellow), #ffaa00);
+  color: black;
+  box-shadow: 0 0 15px var(--neon-yellow);
+}
+
+.completed-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px var(--neon-yellow);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #ff3366, var(--neon-pink));
+  color: white;
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px var(--neon-pink);
+}
+
+/* Effet de pulse sur les boutons */
+@keyframes pulse {
+  0% { box-shadow: 0 0 15px currentColor; }
+  100% { box-shadow: 0 0 25px currentColor; }
+}
+
+.complete-btn:hover,
+.completed-btn:hover,
+.delete-btn:hover {
+  animation: pulse 0.5s infinite alternate;
+}
+
+/* ===== STATISTIQUES ===== */
+.status {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+  border-top: 2px solid var(--card-border);
+  font-family: 'Courier New', monospace;
+}
+
+.status div {
+  padding: 20px 30px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 1px solid var(--neon-blue);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.status div:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--glow-blue);
+}
+
+.status div::before {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.status div:first-child::before { content: '📊'; color: var(--neon-blue); }
+.status div:last-child::before { content: '✅'; color: var(--neon-green); }
+
+/* ===== MESSAGE VIDE ===== */
+.todo-list:empty::before {
+  content: '🚀 AUCUNE TÂCHE. COMMENCEZ VOTRE MISSION. 🚀';
+  display: block;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--neon-blue);
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 3px dashed var(--neon-blue);
+  border-radius: 20px;
+  background: rgba(0, 243, 255, 0.05);
+  animation: neonPulse 2s infinite alternate;
+}
+
+@keyframes neonPulse {
+  0% { 
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 20px var(--neon-blue);
   }
-  
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: 
-      radial-gradient(circle at 20% 50%, var(--primary) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, var(--secondary) 0%, transparent 50%),
-      linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-    min-height: 100vh;
-    padding: 20px;
-    overflow-x: hidden;
+  100% { 
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 30px var(--neon-pink);
   }
-  
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-      radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 20%),
-      radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 20%);
-    z-index: -1;
-    animation: float 20s infinite linear;
+}
+
+/* ===== ANIMATION DES TODOS ===== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
   }
-  
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-5px, -5px); }
-    50% { transform: translate(5px, 5px); }
-    75% { transform: translate(-5px, 5px); }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
-  
+}
+
+.todo-item {
+  animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
   .container {
-    max-width: 800px;
-    margin: 40px auto;
-    background: var(--bg-primary);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 
-      0 20px 60px var(--shadow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .container::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent 30%,
-      var(--glass-border) 50%,
-      transparent 70%
-    );
-    transform: rotate(45deg);
-    animation: shine 8s infinite linear;
-  }
-  
-  @keyframes shine {
-    0% { transform: rotate(45deg) translateX(-100%); }
-    100% { transform: rotate(45deg) translateX(100%); }
+    margin: 20px auto;
+    padding: 25px;
   }
   
   h1 {
-    color: var(--text-primary);
-    margin-bottom: 40px;
-    text-align: center;
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    text-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
-  }
-  
-  h1::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    border-radius: 2px;
-  }
-  
-  .dark-mode-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-  
-  .dark-mode-toggle::before {
-    content: '☀️';
-    cursor: pointer;
-    font-size: 1.5rem;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-    transition: transform 0.3s ease;
-    display: block;
-  }
-  
-  .dark-mode-toggle:hover::before {
-    transform: scale(1.2) rotate(30deg);
-  }
-  
-  /* Changement d'icône en mode sombre */
-  @media (prefers-color-scheme: dark) {
-    .dark-mode-toggle::before {
-      content: '🌙';
-      filter: drop-shadow(0 0 10px rgba(129, 140, 248, 0.5));
-    }
+    font-size: 2.5rem;
+    letter-spacing: 2px;
   }
   
   .add-todo {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: 1fr;
     gap: 15px;
-    margin-bottom: 40px;
-    position: relative;
-  }
-  
-  .add-todo::before {
-    content: '✏️';
-    position: absolute;
-    top: -25px;
-    left: 0;
-    font-size: 1.2rem;
-    opacity: 0.7;
-  }
-  
-  .add-todo input {
-    padding: 18px 20px;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    font-size: 16px;
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-    font-weight: 500;
-  }
-  
-  .add-todo input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-  }
-  
-  .add-todo input::placeholder {
-    color: var(--text-secondary);
-    opacity: 0.7;
-  }
-  
-  .add-todo button {
-    padding: 18px 32px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 
-      0 10px 30px rgba(99, 102, 241, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-  
-  .add-todo button:hover {
-    transform: translateY(-3px);
-    box-shadow: 
-      0 15px 40px rgba(99, 102, 241, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    background: linear-gradient(135deg, var(--primary-glow), var(--secondary));
-  }
-  
-  .add-todo button:active {
-    transform: translateY(-1px);
-  }
-  
-  .add-todo button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(255, 255, 255, 0.2), 
-      transparent);
-    transition: left 0.6s ease;
-  }
-  
-  .add-todo button:hover::after {
-    left: 100%;
-  }
-  
-  .todo-list {
-    margin-bottom: 40px;
-    min-height: 200px;
-  }
-  
-  .todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px;
-    margin-bottom: 20px;
-    background: var(--bg-secondary);
-    border-radius: 20px;
-    border-left: 8px solid var(--primary);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .todo-item:hover {
-    transform: translateX(10px) translateY(-5px);
-    box-shadow: 
-      0 15px 40px var(--shadow),
-      0 0 30px rgba(99, 102, 241, 0.1);
-  }
-  
-  .todo-item.completed {
-    border-left-color: var(--success);
-    opacity: 0.9;
-    background: linear-gradient(
-      to right,
-      var(--bg-secondary),
-      rgba(16, 185, 129, 0.05)
-    );
-  }
-  
-  .todo-item.completed .todo-content h3 {
-    text-decoration: line-through;
-    color: var(--text-secondary);
-  }
-  
-  .todo-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 8px;
-    height: 100%;
-    background: linear-gradient(to bottom, var(--primary), var(--accent));
-    transition: height 0.3s ease;
-  }
-  
-  .todo-item.completed::before {
-    background: linear-gradient(to bottom, var(--success), #34d399);
-  }
-  
-  .todo-content {
-    flex: 1;
-    padding-right: 20px;
-  }
-  
-  .todo-content h3 {
-    margin-bottom: 10px;
-    color: var(--text-primary);
-    font-size: 1.3rem;
-    font-weight: 700;
-    position: relative;
-    display: inline-block;
-  }
-  
-  .todo-content h3::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.3s ease;
-  }
-  
-  .todo-item:hover .todo-content h3::after {
-    width: 100%;
-  }
-  
-  .todo-content p {
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-    line-height: 1.6;
-  }
-  
-  .todo-content small {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    opacity: 0.8;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .todo-content small::before {
-    content: '🕒';
-    font-size: 0.8rem;
   }
   
   .todo-actions {
-    display: flex;
-    gap: 12px;
+    flex-direction: column;
+    width: 100%;
   }
   
   .todo-actions button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    min-width: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  
-  .todo-actions button::before {
-    font-size: 1.1rem;
-  }
-  
-  .complete-btn {
-    background: linear-gradient(135deg, var(--success), #34d399);
-    color: white;
-    box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
-  }
-  
-  .complete-btn::before { content: '✓'; }
-  
-  .complete-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-  }
-  
-  .completed-btn {
-    background: linear-gradient(135deg, var(--warning), #fbbf24);
-    color: white;
-    box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
-  }
-  
-  .completed-btn::before { content: '↻'; }
-  
-  .completed-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
-  }
-  
-  .delete-btn {
-    background: linear-gradient(135deg, var(--danger), #f87171);
-    color: white;
-    box-shadow: 0 5px 20px rgba(239, 68, 68, 0.3);
-  }
-  
-  .delete-btn::before { content: '🗑️'; }
-  
-  .delete-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+    width: 100%;
+    min-width: auto;
   }
   
   .status {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 30px;
-    border-top: 2px solid var(--border);
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    font-weight: 600;
+    flex-direction: column;
+    gap: 15px;
   }
   
   .status div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 25px;
-    background: var(--bg-secondary);
-    border-radius: 16px;
-    transition: all 0.3s ease;
-  }
-  
-  .status div:hover {
-    transform: translateY(-3px);
-    background: var(--glass-bg);
-    box-shadow: 0 10px 25px var(--shadow);
-  }
-  
-  .status div::before {
-    font-size: 1.3rem;
-  }
-  
-  .status div:first-child::before { content: '📊'; }
-  .status div:last-child::before { content: '✅'; }
-  
-  .todo-list:empty::before {
-    content: '✨ Aucune tâche pour le moment. Ajoutez-en une pour commencer ! ✨';
-    display: block;
+    justify-content: center;
     text-align: center;
-    padding: 60px 20px;
-    color: var(--text-secondary);
-    font-size: 1.2rem;
-    font-weight: 500;
-    background: var(--bg-secondary);
-    border-radius: 20px;
-    border: 2px dashed var(--border);
-    animation: pulse 2s infinite;
   }
-  
-  @keyframes pulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-  }
-  
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateY(30px) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-  
-  .todo-item {
-    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  @media (max-width: 768px) {
-    .container {
-      margin: 20px auto;
-      padding: 25px;
-    }
-    
-    h1 {
-      font-size: 2.2rem;
-    }
-    
-    .add-todo {
-      grid-template-columns: 1fr;
-    }
-    
-    .todo-actions {
-      flex-direction: column;
-      width: 100%;
-    }
-    
-    .todo-actions button {
-      width: 100%;
-    }
-    
-    .status {
-      flex-direction: column;
-      gap: 15px;
-    }
-    
-    .status div {
-      justify-content: center;
-    }
-  }
-  
-  input, button, .todo-item {
-    transition: 
-      transform 0.3s ease,
-      box-shadow 0.3s ease,
-      border-color 0.3s ease,
-      background-color 0.3s ease;
-  }
-  
-  button, input[type="checkbox"], .todo-item {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%236366f1' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%236366f1'/%3E%3C/svg%3E") 16 16, pointer;
-  }
+}
+
+/* ===== CURSEUR CYBERPUNK ===== */
+button, .todo-item, input {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 L30 16 L16 30 L2 16 Z' fill='none' stroke='%2300f3ff' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%2300f3ff'/%3E%3C/svg%3E") 16 16, pointer;
+}
+
+/* ===== SCROLLBAR STYLÉE ===== */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--neon-blue), var(--neon-purple));
+  border-radius: 10px;
+  border: 2px solid var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--neon-pink), var(--neon-purple));
+}
