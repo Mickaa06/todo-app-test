@@ -56,7 +56,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>📝 Todo List Application</h1>
+      <h1> Todo List Application</h1>
       
       <div className="add-todo">
         <input
